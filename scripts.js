@@ -21,6 +21,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
         return response.json();
     })
     .then(function (myJson) {
+        console.log(myJson);
         var results = [];
         for (let i = 0; i < myJson.results.length; i++) {
             var result = {
@@ -50,7 +51,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
                             <div class = "card-info-container">
                                 <h3 id = "name" class = "card-name cap"> ${results[i].firstName} ${results[i].lastName} </h3> 
                                 <p class = "card-text" > ${results[i].email} </p> 
-                                <p class = "card-text cap" > ${results[i].city}, ${results[i].state} </p> 
+                                <p class = "card-text cap" > ${results[i].city}</p> 
                             </div> 
                         </div>
                         `;
