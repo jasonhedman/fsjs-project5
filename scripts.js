@@ -1,5 +1,5 @@
 let index = 0;
-
+//Changes the data displayed in the modal window using an array of data to be displayed and an index value to indicate the set of data which is to be used
 function changeData(array, dataIndex) {
     let modalContent =
         `
@@ -15,12 +15,13 @@ function changeData(array, dataIndex) {
     $('.modal-info-container').html(modalContent);
     $('.modal-container').show();
 }
-
+//Start of the API call
 fetch('https://randomuser.me/api/?results=12&nat=us')
     .then(function (response) {
         return response.json();
     })
     .then(function (myJson) {
+        //Creates new array of objects that are more readable than the objects provided by the API
         console.log(myJson);
         var results = [];
         for (let i = 0; i < myJson.results.length; i++) {
@@ -41,6 +42,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
         console.log(results);
         return results;
     }).then(function (results) {
+        //Creates the directory with 12 generated users and appends the html to the correct place on the page
         var html = '';
         for (var i = 0; i < results.length; i++) {
             var card = `
@@ -66,6 +68,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
                                     `);
         return results;
     }).then(function (results) {
+        //Appends the modal html to the page, but hides it until a card is clicked
         var modal =
             `
             <div class="modal-container">
@@ -85,6 +88,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
         $('.modal-container').hide();
         return results;
     }).then(function (results) {
+        //Displays the modal window for a clicked card using the changeData function defined in the beginning of the code
         $('.card').click(function (e) {
             index = $(this).data('index');
             if (index == 11) {
@@ -97,9 +101,11 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
             }
             changeData(results, index);
         })
+        //Hides the modal window when the x is pressed
         $('#modal-close-btn').click(function () {
             $('.modal-container').hide();
         })
+        //Changes what content is displayed in the modal window when the back arrow is pressed
         $('#modal-prev').click(function () {
             if (index > 0) {
                 index--;
@@ -112,6 +118,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
                 $(this).show();
             }
         })
+        //Changes what content is displayed in the modal window when the front arrow is pressed
         $('#modal-next').click(function () {
             if (index < 11) {
                 index++;
@@ -124,6 +131,7 @@ fetch('https://randomuser.me/api/?results=12&nat=us')
                 $(this).show();
             }
         })
+        //Adds search functionality to filter the displayed users
         $('#search-input').keyup(function(e){
             let names = $('.card .card-info-container h3');
             for(let i = 0; i < names.length; i++){
